@@ -9,3 +9,142 @@
   --color-dark-xl: #4C4C4C;
   --color-dark-3xl: #292929;
 }
+
+
+*, 
+*::after, 
+*::before {
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1280px;
+  padding: 0 40px;
+  margin: 0 auto;
+}
+
+.first-bg {
+  background: url(../assets/main/noise_lines_transparent@2X.png), radial-gradient(100% 215.42% at 0% 0%, #5B483A 0%, #262425 100%), #211F20;
+}
+
+.button {
+  padding: 0.938rem 2.813rem;
+  border-radius: 6.25rem;
+  text-decoration: none;
+  font-size: 1.063rem;
+  color: var(--color-dark-3xl);
+  background-color: var(--color-primary);
+  cursor: pointer;
+
+  transition: all 0.3s;
+}
+
+.button:hover {
+  background-color: var(--color-primary-light);
+}
+
+/* HEADER */
+.first {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  
+  padding-top: 1.875rem;
+}
+
+.logo {
+
+}
+
+.logo__title {
+  margin: 0;
+  margin-bottom: 0.625rem;
+  color: var(--color-primary);
+  font-size: 2rem;
+  line-height: 110%;
+  letter-spacing: 0.06em;
+  font-family: 'Georgia';
+  font-style: normal;
+  font-weight: 400;
+}
+
+.logo__subtitle {
+  margin: 0;
+  font-size: 0.813rem;
+  line-height: 1.154em;
+  letter-spacing: 0.1em;
+
+  font-family: 'Arial';
+  font-style: normal;
+  font-weight: 400;
+
+  color: var(--color-light-xl);
+}
+
+.nav {
+  /* width: 100%; */
+}
+
+.nav__container {
+  display: flex;
+  list-style-type: none;
+}
+
+.nav__item + .nav__item {
+  margin-left: 2.188rem;
+}
+
+.nav__text {
+  font-family: 'Arial';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 160%;
+  color: var(--color-dark-s);
+  text-decoration: none;
+}
+/* HEADER  END*/
+
+/* START */
+.start {
+  padding-top: 15.813rem;
+  padding-bottom: 15.188rem;
+  width: 100%;
+
+  background: url(../assets/main/start-screen-puppy.png);
+  background-repeat: no-repeat;
+  background-position: right bottom;
+}
+
+.start__header {
+  margin: 0;
+  margin-bottom: 2.625rem;
+  max-width: 19.375rem;
+  font-family: 'Georgia';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2.75rem;
+  line-height: 130%;
+
+  color: var(--color-light-xl);
+}
+
+.start__text {
+  padding: 0;
+  margin-bottom: 2.625rem;
+  max-width: 28.75rem;
+  font-family: 'Arial';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.938rem;
+  line-height: 160%;
+
+  color: var(--color-dark-s);
+}
+/* START END */

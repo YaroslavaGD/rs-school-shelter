@@ -1,0 +1,14 @@
+@font-face {
+  font-family: 'georgia';
+  src: url('abeezee-regular-webfont.eot');
+            /* für IE9 */
+  src: url('abeezee-regular-webfont.eot?#iefix') 
+            format('embedded-opentype'),
+            /* für IE6-IE8 */
+       url('abeezee-regular-webfont.woff') 
+            format('woff'), 
+           /* für moderne Browser */
+       url('abeezee-regular-webfont.ttf') 
+            format('truetype');
+          /* für Safari, Android, iOS */
+ }

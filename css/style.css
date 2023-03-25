@@ -31,10 +31,18 @@
   padding: 0.938rem 2.813rem;
   border-radius: 6.25rem;
   text-decoration: none;
-  font-size: 1.063rem;
-  color: var(--color-dark-3xl);
   background-color: var(--color-primary);
   cursor: pointer;
+
+  font-family: 'Georgia';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 130%;
+
+  letter-spacing: 0.06em;
+
+  color: var(--color-dark-3xl);
 
   transition: all 0.3s;
 }
@@ -76,6 +84,7 @@
 
 .logo__subtitle {
   margin: 0;
+  padding-left: 4px;
   font-size: 0.813rem;
   line-height: 1.154em;
   letter-spacing: 0.1em;
@@ -114,12 +123,12 @@
 /* START */
 .start {
   padding-top: 15.813rem;
-  padding-bottom: 15.188rem;
+  padding-bottom: 16.1rem;
   width: 100%;
 
   background: url(../assets/main/start-screen-puppy.png);
   background-repeat: no-repeat;
-  background-position: right bottom;
+  background-position: calc(100% - 40px) bottom;
 }
 
 .start__header {
@@ -137,7 +146,7 @@
 
 .start__text {
   padding: 0;
-  margin-bottom: 2.625rem;
+  margin-bottom: 3.525rem;
   max-width: 28.75rem;
   font-family: 'Arial';
   font-style: normal;
@@ -148,3 +157,46 @@
   color: var(--color-dark-s);
 }
 /* START END */
+
+/* ABOUT */
+.about {
+  padding: 94px 0 114px;
+  display: flex;
+  justify-content: right;
+
+  background: url(../assets/main/about-pets.png);
+  background-repeat: no-repeat;
+  background-position: 175px 80px;
+}
+.about__content {
+  max-width: 430px;
+  margin-right: 175px;
+}
+
+.about__header {
+  margin: 0;
+  
+  max-width: 370px;
+
+  font-family: 'Georgia';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 35px;
+  line-height: 130%;
+  letter-spacing: 0.06em;
+
+  color: var(--color-dark-l);
+}
+
+.about__text {
+  margin: 0;
+  margin-top: 25px;
+  font-family: 'Arial';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 160%;
+
+  color: var(--color-dark-xl);
+}
+/* ABOUT END */

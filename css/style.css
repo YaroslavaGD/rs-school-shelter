@@ -98,10 +98,6 @@
   color: var(--color-light-xl);
 }
 
-.nav {
-  /* width: 100%; */
-}
-
 .nav__container {
   display: flex;
   list-style-type: none;
@@ -397,7 +393,7 @@
 .donation {
   display: flex;
   justify-content: right;
-  padding: 80px 0 100px;
+  padding: 80px 0 98px;
   
   background-color: var(--color-light-l);
 }
@@ -487,3 +483,74 @@
   color: var(--color-dark-m);
 }
 /* DONATION END */
+
+/* FOOTER */
+.footer {
+  background: url(../assets/main/noise_lines_transparent@2X.png), radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%), #211F20;
+}
+
+.footer__container {
+  
+  padding-top: 56px;
+  padding-bottom: 60px;
+  display: flex;
+  gap: 0 161px;
+  background-image: url(../assets/main/footer-puppy.png);
+  background-repeat: no-repeat;
+  background-position: calc(100% - 40px) bottom;
+}
+
+.footer__content {
+  display: flex;
+  flex-direction: column;
+  gap: 40px 0;
+}
+
+.footer__content--2 {
+  gap: 29px 0;
+}
+
+.footer__header {
+  max-width: 279px;
+  margin: 0;
+  font-family: 'Georgia';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 35px;
+  line-height: 130%;
+  letter-spacing: 0.06em;
+
+  color: var(--color-light-xl);
+}
+
+.footer__contact {
+  display: inline-block;
+  margin: 0;
+  padding: 4px 0;
+  padding-left: 60px;
+  max-width: 320px;
+  text-decoration: none;
+  font-family: 'Georgia';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 115%;
+  letter-spacing: 0.06em;
+  background-repeat: no-repeat;
+  background-position: left center;
+  color: var(--color-primary);
+}
+
+.footer__contact--email {
+  background-image: url(../assets/svg/icon-email.svg);
+}
+
+.footer__contact--tel {
+  background-image: url(../assets/svg/icon-phone.svg);
+}
+
+.footer__contact--addr {
+  background-image: url(../assets/svg/icon-marker.svg);
+  padding-left: 40px;
+}
+/* FOOTER END */

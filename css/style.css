@@ -19,6 +19,10 @@
   box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 .container {
   max-width: 1280px;
   padding: 0 40px;
@@ -30,6 +34,7 @@
 }
 
 .button {
+  display: inline-block;
   padding: 0.938rem 2.813rem;
   border: 2px solid var(--color-primary);
   border-radius: 6.25rem;
@@ -47,6 +52,12 @@
   color: var(--color-dark-3xl);
 
   transition: all 0.3s;
+}
+
+.button:active {
+  transform: scale(1.1);
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light);
 }
 
 .button:hover {
@@ -80,6 +91,10 @@
 .logo {
   text-decoration: none;
   transition: all 0.3s;
+}
+
+.logo:hover {
+  transform: scale(1.1);
 }
 
 .logo__title {
@@ -145,15 +160,24 @@
   transition: all 0.3s;
 }
 
-.nav__item + .nav__item {
-  margin-left: 2.188rem;
+.nav__item:active {
+  transform: scale(1.1);
 }
 
 .nav__item--active {
   position: relative;
 }
 
-.nav__item--active::after {
+.nav__item--active:active {
+  transform: scale(1);
+  cursor: auto;
+}
+
+.nav__item--active .nav__text{
+  cursor:auto;
+}
+
+.nav__item::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -161,8 +185,18 @@
 
   width: 100%;
   height: 3px;
-  background-color: var(--color-primary);
+  background-color: transparent;
   transform: translateY(100%);
+  transition: all 0.3s;
+}
+
+/* .nav__item:active:after, */
+.nav__item--active::after {
+  background-color: var(--color-primary);
+}
+
+.nav__item + .nav__item {
+  margin-left: 2.188rem;
 }
 
 .nav__text {
@@ -191,14 +225,14 @@
   color: var(--color-light-s);
 }
 .header--light .nav__item:hover .nav__text {
-  color: var(--color-dark-3xl)
+  color: var(--color-dark-3xl);
 }
 /* HEADER  END*/
 
 /* START */
 .start {
-  padding-top: 15.813rem;
-  padding-bottom: 16.1rem;
+  padding-top: 254px;
+  padding-bottom: 240px;
   width: 100%;
 
   background: url(../assets/main/start-screen-puppy.png);
@@ -208,7 +242,7 @@
 
 .start__header {
   margin: 0;
-  margin-bottom: 2.625rem;
+  margin-bottom: 40px;
   max-width: 19.375rem;
   font-family: 'Georgia';
   font-style: normal;
@@ -221,7 +255,7 @@
 
 .start__text {
   padding: 0;
-  margin-bottom: 3.525rem;
+  margin-bottom: 41px;
   max-width: 28.75rem;
   font-family: 'Arial';
   font-style: normal;
@@ -409,6 +443,10 @@
   transform: translateY(-50%);
 }
 
+.slider__arrow:active {
+  transform: scale(1.1);
+}
+
 .slider__arrow:hover {
   border-color: var(--color-primary-light);
   background-color: var(--color-primary-light);
@@ -421,6 +459,10 @@
 .slider__arrow--next {
   background-image: url(../assets/svg/left-button.svg);
   transform: rotate(-180deg);
+}
+
+.slider__arrow--next:active {
+  transform: rotate(-180deg) scale(1.1);
 }
 
 .slider__pagination {
@@ -476,6 +518,11 @@
   color: var(--color-dark-s);
 }
 
+.slider__pagination__item:disabled:active,
+.slider__pagination__item[disabled]:active {
+  transform: scale(1);
+}
+
 .slider__pagination__item:hover:disabled,
 .slider__pagination__item[disabled]:hover {
   
@@ -488,6 +535,10 @@
 
 .slider__pagination__number {
   background-color: var(--color-primary);
+}
+
+.slider__pagination__item:active {
+  transform: scale(1.1);
 }
 
 .slider__pagination__item:hover {
@@ -665,6 +716,10 @@
   transition: all 0.3s;
 }
 
+.donation__cardnumber:active {
+  transform: scale(1.1);
+}
+
 .donation__cardnumber:hover {
   background-color: var(--color-primary-light);
 }
@@ -741,9 +796,12 @@
 
   transition: all 0.3s;
 }
+.footer__contact:active {
+  transform: scale(1.1);
+}
 
 .footer__contact:hover {
-  color: var(--color-primary-light);
+  color: var(--color-light-xl);
 }
 
 .footer__contact--email {

@@ -238,6 +238,7 @@ html {
   background: url(../assets/main/start-screen-puppy.png);
   background-repeat: no-repeat;
   background-position: calc(100% - 40px) bottom;
+  background-size: 54.6%;
 }
 
 .start__header {

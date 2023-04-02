@@ -841,7 +841,36 @@ html {
     gap: unset;
   }
 
+  .help__content {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 55px 0%;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0px;
+    padding: 0 6%;
+  }
+
+  .donation__container {
+    background-position: 23.6% calc(50% - 1px);
+    background-size: 39.42%;
+  }
+
+  .footer__container {
+    display: grid;
+    grid-template-columns: 1.153fr 1fr 1fr;
+    gap: unset;
+  }
 }
+
+@media (max-width: 1250px) {
+  .donation__content {
+    max-width: 380px;
+    margin-right: 5%;
+  }
+}
+
 @media (max-width: 1240px) {
   .about {
     background-position: 50.1% 84.4%;
@@ -859,6 +888,7 @@ html {
   .button {
     padding: 13px 43px;
   }
+
   .start {
     padding-top: 15%;
     padding-bottom: 47%;
@@ -866,8 +896,12 @@ html {
     background-size: 58%;
   }
   
-  .about{
+  .about {
     padding-bottom: 53%;
+  }
+
+  .donation__container {
+    background-position: 15% calc(50% - 1px);
   }
 }
 
@@ -878,6 +912,16 @@ html {
 
   .slider__item:last-of-type {
     display: none;
+  }
+
+  .footer__container {
+    display: flex;
+    width: 100%;
+    gap: unset;
+    align-items: center;
+    justify-content: space-evenly;
+    padding-bottom: 36%;
+    background-position: 50% bottom;
   }
 }
 
@@ -897,6 +941,27 @@ html {
     max-width: 530px;
   }
 
+  .donation__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    padding-bottom: 41.7%;
+    background-position: 50% 100%;
+    background-size: auto;
+  }
+
+  .donation__content {
+    margin-right: 0;
+  }
+
+  .footer__container {
+    padding-bottom: 48.7%;
+    justify-content: space-between;
+    padding-left: 8.3%;
+    padding-right: 5.8%;
+    padding-top: 31px;
+  }
 }
 
 @media (max-width: 769px) {
@@ -953,5 +1018,19 @@ html {
   .pets__slider {
     margin-bottom: 8.5%;
   }
+  
+  .help__header {
+    margin-bottom: 8.2%;
+  }
+
+  .help__content {
+    padding: 0 8px;
+  }
+
+  .donation {
+    padding-bottom: 100px;
+  }
+
+
 }
 /* MEDIA END */

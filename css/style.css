@@ -880,7 +880,8 @@ html {
 
   .about__content {
     margin: 0 auto;
-    max-width: 620px;
+    max-width: 80%;
+    /* max-width: 620px; */
   }
 }
 
@@ -889,13 +890,24 @@ html {
     padding: 13px 43px;
   }
 
-  .start {
+  /* .start {
     padding-top: 15%;
     padding-bottom: 47%;
     background-position: calc(100% - 35px) bottom;
     background-size: 58%;
+  } */
+
+  .start {
+    padding-top: 10%;
+    padding-bottom: 60%;
+    background-position: calc(100% - 35px) bottom;
+    background-size: 62%;
   }
   
+  .start__text {
+    max-width: 55%;
+  }
+
   .about {
     padding-bottom: 53%;
   }
@@ -933,12 +945,12 @@ html {
     background-size: 62%;
   }
   
-  .about{
+  .about {
     padding-bottom: 68%;
   }
 
   .about__content {
-    max-width: 530px;
+    /* max-width: 530px; */
   }
 
   .donation__container {
@@ -953,6 +965,11 @@ html {
 
   .donation__content {
     margin-right: 0;
+    max-width: 60%;
+  }
+
+  .donation__description {
+    max-width: 100%;
   }
 
   .footer__container {
@@ -1000,7 +1017,7 @@ html {
     display: flex;
     margin: 0 auto;
     flex-direction: column;
-    max-width: 460px;
+    max-width: 65%;
   }
 
   .start__header {
@@ -1009,6 +1026,10 @@ html {
 
   .start__button {
     align-self: center;
+  }
+
+  .start__text {
+    max-width: 100%;
   }
 
   .about{
@@ -1059,6 +1080,8 @@ html {
     padding-bottom: 100px;
   }
 
-
+  .donation__content {
+    max-width: 54%;
+  }
 }
 /* MEDIA END */

@@ -1,5 +1,5 @@
 (function () {
-  console.log('Yaroslava Hryzadubova. Shelter. Part2\n------------------------------------------\nScore 0/100\n');
+  console.log('Yaroslava Hryzadubova. Shelter. Part2\n------------------------------------------\nScore 100/100\n');
   console.log('Оценка по пунктам:\n------------------------------------------\n');
   
   console.log('1. [+14] Вёрстка страницы Main соответствует макету при ширине экрана 1280px: \n');

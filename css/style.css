@@ -392,7 +392,6 @@ html {
   border-radius: 9px;
 
   width: 270px;
-  /* margin: 0 auto; */
   cursor: pointer;
 
   transition: all 0.3s;
@@ -1116,14 +1115,14 @@ html {
 
   .nav__button {
     display: block;
-    border: none;
+    /* border: none;
     background-color: transparent;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url(../assets/svg/menu.svg);
+    background-image: url(../assets/svg/menu.svg); */
   }
   .header--light .nav__button {
-    background-image: url(../assets/svg/menu-light.svg);
+    /* background-image: url(../assets/svg/menu-light.svg); */
   }
   
   .start__header {

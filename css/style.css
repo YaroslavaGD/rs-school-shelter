@@ -23,6 +23,10 @@ html {
     scroll-behavior: smooth;
 }
 
+.page--clip {
+  overflow: hidden;
+}
+
 .container {
   max-width: 1280px;
   padding: 0 40px;
@@ -214,7 +218,7 @@ html {
   transition: all 0.3s;
 }
 
-.nav__button {
+.nav-button {
   display: none;
   width: 30px;
   height: auto;
@@ -1106,25 +1110,96 @@ html {
 }
 
 @media (max-width: 767px) {
-  .nav {
-    display: flex;
-  }
-  .nav__container {
-    display: none;
+  .header__container {
+    align-items: center;
   }
 
-  .nav__button {
+  .nav-button {
+    position: relative;
     display: block;
-    /* border: none;
+    width: 30px;
+    height: 22px;
+    padding: 0;
     background-color: transparent;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-image: url(../assets/svg/menu.svg); */
-  }
-  .header--light .nav__button {
-    /* background-image: url(../assets/svg/menu-light.svg); */
+    border: none;
+    border-top: 2px solid var(--color-primary);
+    border-bottom: 2px solid var(--color-primary);
+    z-index: 2;
+    transition: all 0.4s cubic-bezier(.65, 0, .35, 1);
   }
   
+  .nav-button::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: calc(50% - 1px);
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-primary);
+  }
+
+  .nav-button--open {
+    transform: rotate(-90deg);
+  }
+
+  .header--light .nav-button {
+    border-color: var(--color-dark-4xl);
+  }
+  .header--light .nav-button::after {
+    background-color: var(--color-dark-4xl);
+    background-image:none;
+  }
+
+  .nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    opacity: 0;
+    background-color: var(--color-dark-3xl);
+    z-index: 1;
+
+    transform: translateX(100%);
+    transition: all .4s cubic-bezier(.65, 0, .35, 1);
+  }
+
+  .nav--open {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .nav__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 24px;
+  }
+
+  .nav__item--active::after {
+    transform: translateY(50%);
+  }
+
+  .nav__item + .nav__item {
+    margin-left: 0;
+    margin-top: 41px;
+  }
+
+  .nav__text {
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 160%;
+    color: var(--color-light-s);
+  }
+
   .start__header {
     font-size: 6vw;
     max-width: 71%;

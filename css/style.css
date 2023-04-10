@@ -395,15 +395,15 @@ html {
 }
 
 .slider__content--anim-left {
-  transform: translateX(0);
+  /* transform: translateX(0); */
   
-  transition: transform  0.7s cubic-bezier(.65, 0, .35, 1);
+  /* transition: transform  0.7s cubic-bezier(.65, 0, .35, 1); */
 }
 
 .slider__content--anim-right {
-  transform: translateX(-2160px);
+  /* transform: translateX(calc(-200% - 180px)); */
   
-  transition: transform  0.7s cubic-bezier(.65, 0, .35, 1);
+  /* transition: transform  3s cubic-bezier(.65, 0, .35, 1); */
 }
 
 .slider__content-item {
@@ -881,12 +881,12 @@ html {
     padding-right: 4%;
   }
 
-  .slider__content {
+  /* .slider__content {
     width: 82.15%;
     align-items: center;
     justify-content: space-between;
     gap: unset;
-  }
+  } */
   .slider__content--extra {
     gap: 30px 40px;
   }
@@ -931,7 +931,6 @@ html {
   .about__content {
     margin: 0 auto;
     max-width: 80%;
-    /* max-width: 620px; */
   }
 }
 
@@ -976,13 +975,13 @@ html {
 }
 
 @media (max-width: 1105px) {
-  .slider__content {
+  /* .slider__content {
     justify-content: space-evenly;
   }
 
   .slider__item:last-of-type {
     display: none;
-  }
+  } */
 
   .footer__container {
     display: flex;
@@ -1063,6 +1062,12 @@ html {
 
 }
 
+@media (max-width: 834px) {
+  .slider__container {
+    /* overflow-x: hidden; */
+    width: calc(100% - 120px);
+  }
+}
 @media (max-width: 769px) {
   .start {
     padding-top: 8%;
@@ -1102,9 +1107,9 @@ html {
     margin-top: 24px;
   }
 
-  .slider__content {
+  /* .slider__content {
     justify-content: space-between;
-  }
+  } */
 
   .slider__title {
     margin-bottom: 11%;
@@ -1122,9 +1127,9 @@ html {
     padding-bottom: 2.1%;
   }
   
-  .pets__slider {
+  /* .pets__slider {
     margin-bottom: 8.5%;
-  }
+  } */
   
   .help__header {
     margin-bottom: 8.2%;
@@ -1275,16 +1280,16 @@ html {
 }
 
 @media (max-width: 725px) {
-  .slider__content {
+  /* .slider__content {
     justify-content: center;
-  }
+  } */
   .slider__content--extra {
     display: flex;
   }
 
-  .slider__item:not(:nth-child(1)) {
+  /* .slider__item:not(:nth-child(1)) {
     display: none;
-  }
+  } */
   .slider__content--extra .slider__item:nth-child(1),
   .slider__content--extra .slider__item:nth-child(2),
   .slider__content--extra .slider__item:nth-child(3) {
@@ -1432,7 +1437,11 @@ html {
     margin-bottom: 14.4%;
     margin-top: 14.5%;
   }
-  
+
+  .slider__container {
+    width: 100%;
+  }
+
   .help {
     padding-top: 13%;
     padding-bottom: 12.4%;

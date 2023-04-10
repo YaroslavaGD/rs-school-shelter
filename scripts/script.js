@@ -1,5 +1,5 @@
 import PETS from "./pets.js";
-alert("Уважаемые проверяющие! К сожалению не успела доделать эту часть задания. Еще ведется работа над сайтом. Если есть возможность, пожалуйста проверьте мою работу как можно ближе к дедлайну проверки. Заранее спасибо");
+alert("Уважаемые проверяющие! К сожалению еще не успела доделать эту часть задания. Еще ведется работа над сайтом. Если есть возможность, пожалуйста проверьте мою работу как можно ближе к дедлайну проверки. Заранее спасибо");
 
 // MENU
 const page = document.querySelector('.page');
@@ -13,11 +13,17 @@ const sliderButtonNext = document.querySelector('.slider__arrow--next');
 
 const sliderContainer = document.querySelector('.slider__container');
 const sliderContent = sliderContainer.querySelector('.slider__content');
-const sliderLeftItems = sliderContent.querySelector('.slider__content-item--left');
-const sliderRightItems = sliderContent.querySelector('.slider__content-item--right');
+const sliderPrevItems = sliderContent.querySelector('.slider__content-item--left');
+const sliderNextItems = sliderContent.querySelector('.slider__content-item--right');
 const sliderActiveItems = sliderContent.querySelector('.slider__content-item--active');
 
+const CARD__WIDTH = 270;
+let cardsNumber = 3;
+let activeCards = [];
+let nextCards = [];
+let prevCards = [];
 
+let sliderWidthItems = sliderContainer.clientWidth;
 
 // MENU-FUNCTIONS
 const toggleMenu = () => {
@@ -59,8 +65,97 @@ window.addEventListener('resize', function() {
 }, false);
 
 // SLIDER-FUNCTIONS
+let gapSlides = 90;
+let translateX = 990 + gapSlides;
+setSliderCardsNumber();
+setSliderSizes();
+initializeSlider();
+
+window.addEventListener('resize', function() {
+  setSliderCardsNumber();
+  setSliderSizes();
+  initializeSlider();
+}, false);
+
+function setSliderCardsNumber() {
+  if (document.documentElement.clientWidth >= 1132) {
+    cardsNumber = 3;
+  }
+
+  if (document.documentElement.clientWidth < 1132 && document.documentElement.clientWidth >= 768) {
+    cardsNumber = 2;
+  }
+
+  if (document.documentElement.clientWidth < 768) {
+    cardsNumber = 1;
+  }
+}
+
+function setSliderSizes() {
+  const containerWidth = sliderContainer.clientWidth;
+  
+  let gapNumber = (cardsNumber-1) > 0 ? cardsNumber-1 : 1;
+  gapSlides = Math.floor((containerWidth - CARD__WIDTH * cardsNumber)/gapNumber);
+  translateX = containerWidth + gapSlides;
+  if (cardsNumber == 1) translateX = CARD__WIDTH + gapSlides/2;
+
+  let gapStr = "gap:" + gapSlides +"px;";
+  let translateXStr = "transform: translateX(-" + translateX + "px);";
+
+  sliderContent.style = gapStr + translateXStr;
+  sliderPrevItems.style = gapStr;
+  sliderActiveItems.style = gapStr;
+  sliderButtonNext.style = gapStr;
+}
+
+function setAnimLeft() {
+  
+  let gapStr = "gap:" + gapSlides +"px;";
+
+  if (cardsNumber == 1) {
+
+    sliderContent.style =  "gap:" + gapSlides +"px;" +
+                           "transform: translateX("+gapSlides/2+"px);" +
+                           "transition: transform  0.7s cubic-bezier(.65, 0, .35, 1);";
+  } else {
+    sliderContent.style =  "gap:" + gapSlides +"px;" +
+                           "transform: translateX(0);" +
+                           "transition: transform  0.7s cubic-bezier(.65, 0, .35, 1);";
+  }
+  sliderPrevItems.style = gapStr;
+  sliderActiveItems.style = gapStr;
+  sliderNextItems.style = gapStr;
+}
+
+function setAnimRight() {
+  let gapStr = "gap:" + gapSlides +"px;";
+  if (cardsNumber == 1) {
+    sliderContent.style = "gap:" + gapSlides +"px;" +
+                          "transform: translateX(-" + (CARD__WIDTH*2 + gapSlides + gapSlides/2) + "px);" +
+                          "transition: transform  0.7s cubic-bezier(.65, 0, .35, 1);";
+  } else {
+    sliderContent.style = "gap:" + gapSlides +"px;" +
+                          "transform: translateX(calc(-200% - " + gapSlides*2 + "px));" +
+                          "transition: transform  0.7s cubic-bezier(.65, 0, .35, 1);";
+  }
+  sliderPrevItems.style = gapStr;
+  sliderActiveItems.style = gapStr;
+  sliderNextItems.style = gapStr;
+}
+
+function setAnimCenter() {
+  let gapStr = "gap:" + gapSlides +"px;";
+  sliderContent.style = "gap:" + gapSlides +"px;" +
+                        "transform: translateX(-" + translateX + "px);";
+  sliderPrevItems.style = gapStr;
+  sliderActiveItems.style = gapStr;
+  sliderNextItems.style = gapStr;
+}
+
 function moveSliderPrev (e) {
   sliderContent.classList.add('slider__content--anim-left');
+  setAnimLeft();
+
   sliderButtonPrev.removeEventListener('click', moveSliderPrev);
   sliderButtonNext.removeEventListener('click', moveSliderNext);
 }
@@ -68,6 +163,8 @@ sliderButtonPrev.addEventListener('click', moveSliderPrev);
 
 function moveSliderNext (e) {
   sliderContent.classList.add('slider__content--anim-right');
+  setAnimRight();
+
   sliderButtonPrev.removeEventListener('click', moveSliderPrev);
   sliderButtonNext.removeEventListener('click', moveSliderNext);
 }
@@ -75,23 +172,25 @@ sliderButtonNext.addEventListener('click', moveSliderNext);
 
 sliderContent.addEventListener('transitionend', (e) => {
   if (e.target === sliderContent) {
-    const isLeft = sliderContent.classList.contains('slider__content--anim-left');
-    let newItems;
-    if (isLeft) {
+    const isPrev = sliderContent.classList.contains('slider__content--anim-left');
+
+    if (isPrev) {
       sliderContent.classList.remove('slider__content--anim-left');
-  
-      newItems = sliderLeftItems;
-      sliderActiveItems.innerHTML =  sliderLeftItems.innerHTML;
+      setAnimCenter();
+      sliderActiveItems.innerHTML =  sliderPrevItems.innerHTML;
+
+      activeCards = prevCards;
+      generatePrevCards();
+      createSetCards(sliderPrevItems, prevCards);
   
     } else {
       sliderContent.classList.remove('slider__content--anim-right');
-      newItems = sliderRightItems;
-      sliderActiveItems.innerHTML  =  sliderRightItems.innerHTML;
-    }
-  
-    newItems.innerHTML = "";
-    for (let i = 0; i < 3; i++) {
-      newItems.appendChild(createCard());
+      setAnimCenter();
+      sliderActiveItems.innerHTML  =  sliderNextItems.innerHTML;
+
+      activeCards = nextCards;
+      generateNextCards();
+      createSetCards(sliderNextItems, nextCards);
     }
     
     sliderButtonPrev.addEventListener('click', moveSliderPrev);
@@ -99,12 +198,10 @@ sliderContent.addEventListener('transitionend', (e) => {
   }
 });
 
-let activeCards = [];
-let nextCards = [];
-let prevCards = [];
-function generateFirstCards() {
+function generateActiveCards() {
   let i = 0;
-  while (i !== 3) {
+  activeCards = [];
+  while (i !== cardsNumber) {
     const cardNumber =  Math.floor(Math.random() * 8);
     if (!activeCards.includes(cardNumber)) {
       activeCards.push(cardNumber);
@@ -115,7 +212,8 @@ function generateFirstCards() {
 
 function generateNextCards() {
   let i = 0;
-  while (i !== 3) {
+  nextCards = [];
+  while (i !== cardsNumber) {
     const cardNumber =  Math.floor(Math.random() * 8);
     if (!activeCards.includes(cardNumber) && !nextCards.includes(cardNumber)) {
       nextCards.push(cardNumber);
@@ -126,7 +224,8 @@ function generateNextCards() {
 
 function generatePrevCards() {
   let i = 0;
-  while (i !== 3) {
+  prevCards = [];
+  while (i !== cardsNumber) {
     const cardNumber =  Math.floor(Math.random() * 8);
     if (!activeCards.includes(cardNumber) && !prevCards.includes(cardNumber)) {
       prevCards.push(cardNumber);
@@ -134,17 +233,18 @@ function generatePrevCards() {
     } 
   }
 }
+
 function initializeSlider () {
-  generateFirstCards();
-  generateNextCards();
+  generateActiveCards();
   generatePrevCards();
+  generateNextCards();
 
-
-
+  createSetCards(sliderActiveItems, activeCards);
+  createSetCards(sliderPrevItems, prevCards);
+  createSetCards(sliderNextItems, nextCards);
 }
-function createCard() {
-  const cardNumber = Math.floor(Math.random() * 8);
 
+function createCard(cardNumber) {
   const img = document.createElement('img');
   img.classList.add('slider__img');
   img.src = PETS[cardNumber].img;
@@ -170,4 +270,11 @@ function createCard() {
   card.appendChild(button);
 
   return card;
+}
+
+function createSetCards(elem, setNumbers) {
+  elem.innerHTML = '';
+  for (let i = 0; i < cardsNumber; i++) {
+    elem.appendChild(createCard(setNumbers[i]));
+  }
 }

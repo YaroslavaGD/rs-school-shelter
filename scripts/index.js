@@ -40,11 +40,4 @@ Score 0/110
 
   console.log(rules);
   
-
-  console.log('2. [+36] Реализация слайдера-карусели на странице Main:  \n');
-  
-  console.log(' \n');
-  console.log(' \n');
- 
-  
 }());

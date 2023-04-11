@@ -1,5 +1,5 @@
 import PETS from "./pets.js";
-alert("Уважаемые проверяющие! К сожалению еще не успела доделать эту часть задания. Еще ведется работа над сайтом. Если есть возможность, пожалуйста проверьте мою работу как можно ближе к дедлайну проверки. Заранее спасибо");
+// alert("Уважаемые проверяющие! К сожалению еще не успела доделать эту часть задания. Еще ведется работа над сайтом. Если есть возможность, пожалуйста проверьте мою работу как можно ближе к дедлайну проверки. Заранее спасибо");
 
 // MENU
 const page = document.querySelector('.page');
@@ -8,15 +8,16 @@ const nav = document.querySelector('.nav');
 const navItems = [... document.querySelectorAll('.nav__item')];
 
 // CAROUSEL
-const sliderButtonPrev = document.querySelector('.slider__arrow--prev');
-const sliderButtonNext = document.querySelector('.slider__arrow--next');
+const sliderButtonPrev = document.querySelector('#carousel .slider__arrow--prev');
+const sliderButtonNext = document.querySelector('#carousel .slider__arrow--next');
 
-const sliderContainer = document.querySelector('.slider__container');
-const sliderContent = sliderContainer.querySelector('.slider__content');
-const sliderPrevItems = sliderContent.querySelector('.slider__content-item--left');
-const sliderNextItems = sliderContent.querySelector('.slider__content-item--right');
-const sliderActiveItems = sliderContent.querySelector('.slider__content-item--active');
+const sliderContainer = document.querySelector('#carousel .slider__container');
+const sliderContent = document.querySelector('#carousel .slider__content');
+const sliderPrevItems = document.querySelector('#carousel .slider__content-item--left');
+const sliderNextItems = document.querySelector('#carousel .slider__content-item--right');
 
+//нужен как для карусели, так и для модального окна
+const sliderActiveItems = document.querySelector('.slider__content-item--active');
 
 let activeCards = [];
 let nextCards = [];
@@ -24,13 +25,13 @@ let prevCards = [];
 
 const CARD__WIDTH = 270;
 let cardsNumber = 3;
-let sliderWidthItems = sliderContainer.clientWidth;
+// let sliderWidthItems = sliderContainer.clientWidth;
 let gapSlides = 90;
 let translateX = 990 + gapSlides;
 
 // POPUP
 const sliderModal = document.querySelector('.slider-modal');
-const sliderModalButton = sliderModal.querySelector('.slider-modal__button');
+const sliderModalButton = document.querySelector('.slider-modal .slider-modal__button');
 
 // MENU-FUNCTIONS
 const toggleMenu = () => {
@@ -72,181 +73,184 @@ window.addEventListener('resize', function() {
 }, false);
 
 // SLIDER-FUNCTIONS
-setSliderCardsNumber();
-setSliderSizes();
-initializeSlider();
-
-window.addEventListener('resize', function() {
+if (sliderContainer !== null) {
   setSliderCardsNumber();
   setSliderSizes();
   initializeSlider();
-}, false);
 
-function setSliderCardsNumber() {
-  if (document.documentElement.clientWidth >= 1132) {
-    cardsNumber = 3;
+  window.addEventListener('resize', function() {
+    setSliderCardsNumber();
+    setSliderSizes();
+    initializeSlider();
+  }, false);
+
+  function initializeSlider () {
+    generateActiveCards();
+    generatePrevCards();
+    generateNextCards();
+
+    createSetCards(sliderActiveItems, activeCards);
+    createSetCards(sliderPrevItems, prevCards);
+    createSetCards(sliderNextItems, nextCards);
   }
 
-  if (document.documentElement.clientWidth < 1132 && document.documentElement.clientWidth >= 768) {
-    cardsNumber = 2;
-  }
-
-  if (document.documentElement.clientWidth < 768) {
-    cardsNumber = 1;
-  }
-}
-
-function setSliderSizes() {
-  const containerWidth = sliderContainer.clientWidth;
-  
-  let gapNumber = (cardsNumber-1) > 0 ? cardsNumber-1 : 1;
-  gapSlides = Math.floor((containerWidth - CARD__WIDTH * cardsNumber)/gapNumber);
-  translateX = containerWidth + gapSlides;
-  if (cardsNumber == 1) translateX = CARD__WIDTH + gapSlides/2;
-
-  let gapStr = "gap:" + gapSlides +"px;";
-  let translateXStr = "transform: translateX(-" + translateX + "px);";
-
-  sliderContent.style = gapStr + translateXStr;
-  sliderPrevItems.style = gapStr;
-  sliderActiveItems.style = gapStr;
-  sliderButtonNext.style = gapStr;
-}
-
-function setAnimLeft() {
-  
-  let gapStr = "gap:" + gapSlides +"px;";
-
-  if (cardsNumber == 1) {
-
-    sliderContent.style =  "gap:" + gapSlides +"px;" +
-                           "transform: translateX("+gapSlides/2+"px);" +
-                           "transition: transform  0.7s cubic-bezier(.65, 0, .35, 1);";
-  } else {
-    sliderContent.style =  "gap:" + gapSlides +"px;" +
-                           "transform: translateX(0);" +
-                           "transition: transform  0.7s cubic-bezier(.65, 0, .35, 1);";
-  }
-  sliderPrevItems.style = gapStr;
-  sliderActiveItems.style = gapStr;
-  sliderNextItems.style = gapStr;
-}
-
-function setAnimRight() {
-  let gapStr = "gap:" + gapSlides +"px;";
-  if (cardsNumber == 1) {
-    sliderContent.style = "gap:" + gapSlides +"px;" +
-                          "transform: translateX(-" + (CARD__WIDTH*2 + gapSlides + gapSlides/2) + "px);" +
-                          "transition: transform  0.7s cubic-bezier(.65, 0, .35, 1);";
-  } else {
-    sliderContent.style = "gap:" + gapSlides +"px;" +
-                          "transform: translateX(calc(-200% - " + gapSlides*2 + "px));" +
-                          "transition: transform  0.7s cubic-bezier(.65, 0, .35, 1);";
-  }
-  sliderPrevItems.style = gapStr;
-  sliderActiveItems.style = gapStr;
-  sliderNextItems.style = gapStr;
-}
-
-function setAnimCenter() {
-  let gapStr = "gap:" + gapSlides +"px;";
-  sliderContent.style = "gap:" + gapSlides +"px;" +
-                        "transform: translateX(-" + translateX + "px);";
-  sliderPrevItems.style = gapStr;
-  sliderActiveItems.style = gapStr;
-  sliderNextItems.style = gapStr;
-}
-
-function moveSliderPrev (e) {
-  sliderContent.classList.add('slider__content--anim-left');
-  setAnimLeft();
-
-  sliderButtonPrev.removeEventListener('click', moveSliderPrev);
-  sliderButtonNext.removeEventListener('click', moveSliderNext);
-}
-sliderButtonPrev.addEventListener('click', moveSliderPrev);
-
-function moveSliderNext (e) {
-  sliderContent.classList.add('slider__content--anim-right');
-  setAnimRight();
-
-  sliderButtonPrev.removeEventListener('click', moveSliderPrev);
-  sliderButtonNext.removeEventListener('click', moveSliderNext);
-}
-sliderButtonNext.addEventListener('click', moveSliderNext);
-
-sliderContent.addEventListener('transitionend', (e) => {
-  if (e.target === sliderContent) {
-    const isPrev = sliderContent.classList.contains('slider__content--anim-left');
-
-    if (isPrev) {
-      sliderContent.classList.remove('slider__content--anim-left');
-      setAnimCenter();
-      sliderActiveItems.innerHTML =  sliderPrevItems.innerHTML;
-
-      activeCards = prevCards;
-      generatePrevCards();
-      createSetCards(sliderPrevItems, prevCards);
-  
-    } else {
-      sliderContent.classList.remove('slider__content--anim-right');
-      setAnimCenter();
-      sliderActiveItems.innerHTML  =  sliderNextItems.innerHTML;
-
-      activeCards = nextCards;
-      generateNextCards();
-      createSetCards(sliderNextItems, nextCards);
+  function setSliderCardsNumber() {
+    if (document.documentElement.clientWidth >= 1132) {
+      cardsNumber = 3;
     }
+
+    if (document.documentElement.clientWidth < 1132 && document.documentElement.clientWidth >= 768) {
+      cardsNumber = 2;
+    }
+
+    if (document.documentElement.clientWidth < 768) {
+      cardsNumber = 1;
+    }
+  }
+
+  function setSliderSizes() {
+    const containerWidth = sliderContainer.clientWidth;
     
-    sliderButtonPrev.addEventListener('click', moveSliderPrev);
-    sliderButtonNext.addEventListener('click', moveSliderNext);
+    let gapNumber = (cardsNumber-1) > 0 ? cardsNumber-1 : 1;
+    gapSlides = Math.floor((containerWidth - CARD__WIDTH * cardsNumber)/gapNumber);
+    translateX = containerWidth + gapSlides;
+    if (cardsNumber == 1) translateX = CARD__WIDTH + gapSlides/2;
+
+    let gapStr = "gap:" + gapSlides +"px;";
+    let translateXStr = "transform: translateX(-" + translateX + "px);";
+
+    sliderContent.style = gapStr + translateXStr;
+    sliderPrevItems.style = gapStr;
+    sliderActiveItems.style = gapStr;
+    sliderButtonNext.style = gapStr;
   }
-});
 
-function generateActiveCards() {
-  let i = 0;
-  activeCards = [];
-  while (i !== cardsNumber) {
-    const cardNumber =  Math.floor(Math.random() * 8);
-    if (!activeCards.includes(cardNumber)) {
-      activeCards.push(cardNumber);
-      i++;
-    } 
+  function setAnimLeft() {
+    
+    let gapStr = "gap:" + gapSlides +"px;";
+
+    if (cardsNumber == 1) {
+
+      sliderContent.style =  "gap:" + gapSlides +"px;" +
+                            "transform: translateX("+gapSlides/2+"px);" +
+                            "transition: transform  0.7s cubic-bezier(.65, 0, .35, 1);";
+    } else {
+      sliderContent.style =  "gap:" + gapSlides +"px;" +
+                            "transform: translateX(0);" +
+                            "transition: transform  0.7s cubic-bezier(.65, 0, .35, 1);";
+    }
+    sliderPrevItems.style = gapStr;
+    sliderActiveItems.style = gapStr;
+    sliderNextItems.style = gapStr;
   }
-}
 
-function generateNextCards() {
-  let i = 0;
-  nextCards = [];
-  while (i !== cardsNumber) {
-    const cardNumber =  Math.floor(Math.random() * 8);
-    if (!activeCards.includes(cardNumber) && !nextCards.includes(cardNumber)) {
-      nextCards.push(cardNumber);
-      i++;
-    } 
+  function setAnimRight() {
+    let gapStr = "gap:" + gapSlides +"px;";
+    if (cardsNumber == 1) {
+      sliderContent.style = "gap:" + gapSlides +"px;" +
+                            "transform: translateX(-" + (CARD__WIDTH*2 + gapSlides + gapSlides/2) + "px);" +
+                            "transition: transform  0.7s cubic-bezier(.65, 0, .35, 1);";
+    } else {
+      sliderContent.style = "gap:" + gapSlides +"px;" +
+                            "transform: translateX(calc(-200% - " + gapSlides*2 + "px));" +
+                            "transition: transform  0.7s cubic-bezier(.65, 0, .35, 1);";
+    }
+    sliderPrevItems.style = gapStr;
+    sliderActiveItems.style = gapStr;
+    sliderNextItems.style = gapStr;
   }
-}
 
-function generatePrevCards() {
-  let i = 0;
-  prevCards = [];
-  while (i !== cardsNumber) {
-    const cardNumber =  Math.floor(Math.random() * 8);
-    if (!activeCards.includes(cardNumber) && !prevCards.includes(cardNumber)) {
-      prevCards.push(cardNumber);
-      i++;
-    } 
+  function setAnimCenter() {
+    let gapStr = "gap:" + gapSlides +"px;";
+    sliderContent.style = "gap:" + gapSlides +"px;" +
+                          "transform: translateX(-" + translateX + "px);";
+    sliderPrevItems.style = gapStr;
+    sliderActiveItems.style = gapStr;
+    sliderNextItems.style = gapStr;
   }
-}
 
-function initializeSlider () {
-  generateActiveCards();
-  generatePrevCards();
-  generateNextCards();
+  function moveSliderPrev (e) {
+    sliderContent.classList.add('slider__content--anim-left');
+    setAnimLeft();
 
-  createSetCards(sliderActiveItems, activeCards);
-  createSetCards(sliderPrevItems, prevCards);
-  createSetCards(sliderNextItems, nextCards);
+    sliderButtonPrev.removeEventListener('click', moveSliderPrev);
+    sliderButtonNext.removeEventListener('click', moveSliderNext);
+  }
+  sliderButtonPrev.addEventListener('click', moveSliderPrev);
+
+  function moveSliderNext (e) {
+    sliderContent.classList.add('slider__content--anim-right');
+    setAnimRight();
+
+    sliderButtonPrev.removeEventListener('click', moveSliderPrev);
+    sliderButtonNext.removeEventListener('click', moveSliderNext);
+  }
+  sliderButtonNext.addEventListener('click', moveSliderNext);
+
+  sliderContent.addEventListener('transitionend', (e) => {
+    if (e.target === sliderContent) {
+      const isPrev = sliderContent.classList.contains('slider__content--anim-left');
+
+      if (isPrev) {
+        sliderContent.classList.remove('slider__content--anim-left');
+        setAnimCenter();
+        sliderActiveItems.innerHTML =  sliderPrevItems.innerHTML;
+
+        activeCards = prevCards;
+        generatePrevCards();
+        createSetCards(sliderPrevItems, prevCards);
+    
+      } else {
+        sliderContent.classList.remove('slider__content--anim-right');
+        setAnimCenter();
+        sliderActiveItems.innerHTML  =  sliderNextItems.innerHTML;
+
+        activeCards = nextCards;
+        generateNextCards();
+        createSetCards(sliderNextItems, nextCards);
+      }
+      
+      sliderButtonPrev.addEventListener('click', moveSliderPrev);
+      sliderButtonNext.addEventListener('click', moveSliderNext);
+    }
+  });
+
+  function generateActiveCards() {
+    let i = 0;
+    activeCards = [];
+    while (i !== cardsNumber) {
+      const cardNumber =  Math.floor(Math.random() * 8);
+      if (!activeCards.includes(cardNumber)) {
+        activeCards.push(cardNumber);
+        i++;
+      } 
+    }
+  }
+
+  function generateNextCards() {
+    let i = 0;
+    nextCards = [];
+    while (i !== cardsNumber) {
+      const cardNumber =  Math.floor(Math.random() * 8);
+      if (!activeCards.includes(cardNumber) && !nextCards.includes(cardNumber)) {
+        nextCards.push(cardNumber);
+        i++;
+      } 
+    }
+  }
+
+  function generatePrevCards() {
+    let i = 0;
+    prevCards = [];
+    while (i !== cardsNumber) {
+      const cardNumber =  Math.floor(Math.random() * 8);
+      if (!activeCards.includes(cardNumber) && !prevCards.includes(cardNumber)) {
+        prevCards.push(cardNumber);
+        i++;
+      } 
+    }
+  }
+
 }
 
 function createCard(cardNumber) {
@@ -285,50 +289,123 @@ function createSetCards(elem, setNumbers) {
   }
 }
 
-// POPUP-FUNCTIONS
+ // POPUP-FUNCTIONS
 
-// open
-sliderActiveItems.addEventListener("click", (e) => {
-  const activeElement = e.target;
-  if (activeElement !== sliderActiveItems) {
-    const activeCardNumber = activeElement.closest(".slider__item").dataset.id;
-    setModalContent(activeCardNumber);
-    sliderModal.classList.add('slider-modal--open');
-    page.classList.add('page--clip');
+  // open
+  sliderActiveItems.addEventListener("click", (e) => {
+    const activeElement = e.target;
+    if (activeElement !== sliderActiveItems) {
+      const activeCardNumber = activeElement.closest(".slider__item").dataset.id;
+      setModalContent(activeCardNumber);
+      sliderModal.classList.add('slider-modal--open');
+      page.classList.add('page--clip');
+    }
+  });
+
+  //close
+  sliderModal.addEventListener("click", (e) => {
+    if ((e.target == sliderModal) || (e.target == sliderModalButton)) {
+      sliderModal.classList.remove('slider-modal--open');
+      page.classList.remove('page--clip');
+    }
+  })
+
+  function setModalContent(activeCardNumber) {
+    const img = sliderModal.querySelector('.slider-modal__img');
+    img.setAttribute('src', PETS[activeCardNumber].imgmodal);
+
+    const title = sliderModal.querySelector('.slider-modal__title');
+    title.innerText = PETS[activeCardNumber].name;
+    
+    const subtitle = sliderModal.querySelector('.slider-modal__subtitle');
+    subtitle.innerText = PETS[activeCardNumber].type +" - "+ PETS[activeCardNumber].breed;
+    
+    const description = sliderModal.querySelector('.slider-modal__description');
+    description.innerText = PETS[activeCardNumber].description;
+    
+    const age = sliderModal.querySelector('.slider-modal__item--age');
+    age.querySelector('.slider-modal__normal').innerText = PETS[activeCardNumber].age;
+    
+    const inoculations = sliderModal.querySelector('.slider-modal__item--inoculations');
+    inoculations.querySelector('.slider-modal__normal').innerText = PETS[activeCardNumber].inoculations;
+    
+    const diseases = sliderModal.querySelector('.slider-modal__item--diseases');
+    diseases.querySelector('.slider-modal__normal').innerText = PETS[activeCardNumber].diseases;
+    
+    const parasites = sliderModal.querySelector('.slider-modal__item--parasites');
+    parasites.querySelector('.slider-modal__normal').innerText = PETS[activeCardNumber].parasites;
   }
-});
 
-sliderModal.addEventListener("click", (e) => {
-  if ((e.target == sliderModal) || (e.target == sliderModalButton)) {
-    sliderModal.classList.remove('slider-modal--open');
-    page.classList.remove('page--clip');
+  // PAGINATION
+  const GENERATED_NUMBERS = generateMainArray();
+  
+  function generateMainArray() {
+    const sourceArray = [0,1,2,3,4,5,6,7];
+
+    //массив из 48 имеет симметрию (если делить по 8 и по 6 - получаются две части по 24,которые не пересекаются), 
+    //поэтому можно два раза применить данный алгоритм и все
+    return [...generateSeed(sourceArray), ...generateSeed(sourceArray)]
   }
-})
 
-function setModalContent(activeCardNumber) {
-  const img = sliderModal.querySelector('.slider-modal__img');
-  img.setAttribute('src', PETS[activeCardNumber].imgmodal);
+  function generateSeed(sourceFirstArray) {
+    //генерируем первое зерно 
+    //просто рандомно перемешивая массив от 0 до 7
+    let firstArr = shuffleRandomArray(sourceFirstArray);
+    
+    let secondArr = generateSecondArr(firstArr);
+    let thirdArr = generateThirdArr(secondArr);
 
-  const title = sliderModal.querySelector('.slider-modal__title');
-  title.innerText = PETS[activeCardNumber].name;
+    function shuffleRandomArray(array) {
+      let resultArr = [];
+      resultArr.push(...array);
+      for (let i = resultArr.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
   
-  const subtitle = sliderModal.querySelector('.slider-modal__subtitle');
-  subtitle.innerText = PETS[activeCardNumber].type +" - "+ PETS[activeCardNumber].breed;
+        [resultArr[i], resultArr[j]] = [resultArr[j], resultArr[i]]
+      }
   
-  const description = sliderModal.querySelector('.slider-modal__description');
-  description.innerText = PETS[activeCardNumber].description;
-  
-  const age = sliderModal.querySelector('.slider-modal__item--age');
-  age.querySelector('.slider-modal__normal').innerText = PETS[activeCardNumber].age;
-  
-  const inoculations = sliderModal.querySelector('.slider-modal__item--inoculations');
-  inoculations.querySelector('.slider-modal__normal').innerText = PETS[activeCardNumber].inoculations;
-  
-  const diseases = sliderModal.querySelector('.slider-modal__item--diseases');
-  diseases.querySelector('.slider-modal__normal').innerText = PETS[activeCardNumber].diseases;
-  
-  const parasites = sliderModal.querySelector('.slider-modal__item--parasites');
-  parasites.querySelector('.slider-modal__normal').innerText = PETS[activeCardNumber].parasites;
+      return resultArr;
+    }
 
-  
-}
+    function generateSecondArr(source) {
+      //формируем первые 4 цифры, 
+      //такие чтоб не совпадали с последними 2 цифрами в первом зерне, перемешиваем
+      let secondArrPart1 = shuffleRandomArray(source.slice(0,6)).slice(0,4);
+
+      //оставляем только оставшиеся 4 числа
+      //и замешиваем вторую часть
+      let secondArrPart2 = shuffleRandomArray(deleteNumbers(secondArrPart1));
+
+      return [...secondArrPart1, ...secondArrPart2]
+    }
+
+    function generateThirdArr(source) {
+      //формируем первые два числа, 
+      //они должны не попадаться в последних 4 числах 2го зерна
+      //поэтому делаем их из первых 4 чисел - перемешиваем и обрезаем
+      let thirdArrPart1 = shuffleRandomArray(source.slice(0,4)).slice(2);
+
+      //формируем последние 6 чисел
+      //удаляем сформированные 2 числа и перемешиваем оставшиеся
+      let thirdArrPart2 = shuffleRandomArray(deleteNumbers(thirdArrPart1));
+      return [...thirdArrPart1, ...thirdArrPart2];
+    }
+
+    function deleteNumbers(deletedArr) {
+      let resultArr = [0, 1, 2, 3, 4, 5, 6, 7];
+      deletedArr.forEach(el => {
+        resultArr.splice(resultArr.indexOf(el), 1)
+      });
+
+      return resultArr;
+    }
+
+    return [...firstArr,...secondArr,...thirdArr];
+  }
+
+
+  console.log("main numbers ======="+ GENERATED_NUMBERS);
+
+  // console.log(""+shuffleRandomArray(sourceArray)+"|"+shuffleRandomArray(sourceArray)+"|"+shuffleRandomArray(sourceArray));
+
+  // console.log("source =" + sourceArray);

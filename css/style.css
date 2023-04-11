@@ -378,6 +378,7 @@ html {
 .slider__container {
   overflow-x: hidden;
   width: calc(100% - 210px);
+  min-height: 433px;
 }
 
 .slider__content {
@@ -389,7 +390,7 @@ html {
   gap: 90px;
   z-index: 1;
 
-  transform: translateX(-1080px);
+  /* transform: translateX(-1080px); */
 
   /* transition: transform  0.7s cubic-bezier(.65, 0, .35, 1); */
 }
@@ -641,6 +642,7 @@ html {
   
   background: rgba(41, 41, 41, 0.6);
   opacity: 0;
+  z-index: 1000;
   transform: translateX(-100%);
   transition: opacity 0.3s;
 }

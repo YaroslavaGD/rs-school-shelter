@@ -17,13 +17,20 @@ const sliderPrevItems = sliderContent.querySelector('.slider__content-item--left
 const sliderNextItems = sliderContent.querySelector('.slider__content-item--right');
 const sliderActiveItems = sliderContent.querySelector('.slider__content-item--active');
 
-const CARD__WIDTH = 270;
-let cardsNumber = 3;
+
 let activeCards = [];
 let nextCards = [];
 let prevCards = [];
 
+const CARD__WIDTH = 270;
+let cardsNumber = 3;
 let sliderWidthItems = sliderContainer.clientWidth;
+let gapSlides = 90;
+let translateX = 990 + gapSlides;
+
+// POPUP
+const sliderModal = document.querySelector('.slider-modal');
+const sliderModalButton = sliderModal.querySelector('.slider-modal__button');
 
 // MENU-FUNCTIONS
 const toggleMenu = () => {
@@ -65,8 +72,6 @@ window.addEventListener('resize', function() {
 }, false);
 
 // SLIDER-FUNCTIONS
-let gapSlides = 90;
-let translateX = 990 + gapSlides;
 setSliderCardsNumber();
 setSliderSizes();
 initializeSlider();
@@ -264,6 +269,7 @@ function createCard(cardNumber) {
   button.appendChild(span);
 
   const card = document.createElement('li');
+  card.dataset.id = cardNumber;
   card.classList.add('slider__item');
   card.appendChild(img);
   card.appendChild(descriptionText);
@@ -277,4 +283,52 @@ function createSetCards(elem, setNumbers) {
   for (let i = 0; i < cardsNumber; i++) {
     elem.appendChild(createCard(setNumbers[i]));
   }
+}
+
+// POPUP-FUNCTIONS
+
+// open
+sliderActiveItems.addEventListener("click", (e) => {
+  const activeElement = e.target;
+  if (activeElement !== sliderActiveItems) {
+    const activeCardNumber = activeElement.closest(".slider__item").dataset.id;
+    setModalContent(activeCardNumber);
+    sliderModal.classList.add('slider-modal--open');
+    page.classList.add('page--clip');
+  }
+});
+
+sliderModal.addEventListener("click", (e) => {
+  if ((e.target == sliderModal) || (e.target == sliderModalButton)) {
+    sliderModal.classList.remove('slider-modal--open');
+    page.classList.remove('page--clip');
+  }
+})
+
+function setModalContent(activeCardNumber) {
+  const img = sliderModal.querySelector('.slider-modal__img');
+  img.setAttribute('src', PETS[activeCardNumber].imgmodal);
+
+  const title = sliderModal.querySelector('.slider-modal__title');
+  title.innerText = PETS[activeCardNumber].name;
+  
+  const subtitle = sliderModal.querySelector('.slider-modal__subtitle');
+  subtitle.innerText = PETS[activeCardNumber].type +" - "+ PETS[activeCardNumber].breed;
+  
+  const description = sliderModal.querySelector('.slider-modal__description');
+  description.innerText = PETS[activeCardNumber].description;
+  
+  const age = sliderModal.querySelector('.slider-modal__item--age');
+  age.querySelector('.slider-modal__normal').innerText = PETS[activeCardNumber].age;
+  
+  const inoculations = sliderModal.querySelector('.slider-modal__item--inoculations');
+  inoculations.querySelector('.slider-modal__normal').innerText = PETS[activeCardNumber].inoculations;
+  
+  const diseases = sliderModal.querySelector('.slider-modal__item--diseases');
+  diseases.querySelector('.slider-modal__normal').innerText = PETS[activeCardNumber].diseases;
+  
+  const parasites = sliderModal.querySelector('.slider-modal__item--parasites');
+  parasites.querySelector('.slider-modal__normal').innerText = PETS[activeCardNumber].parasites;
+
+  
 }

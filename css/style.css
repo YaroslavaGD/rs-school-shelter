@@ -1235,10 +1235,10 @@ html {
     margin-top: 41px;
   }
 
-  .slider__content--extra .slider__item:nth-child(n+7),
+  /* .slider__content--extra .slider__item:nth-child(n+7),
   .slider__content--extra .slider__item:nth-child(n+8) {
     display: none;
-  }
+  } */
 
 }
 

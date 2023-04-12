@@ -1,5 +1,5 @@
 import PETS from "./pets.js";
-// alert("Уважаемые проверяющие! К сожалению еще не успела доделать эту часть задания. Еще ведется работа над сайтом. Если есть возможность, пожалуйста проверьте мою работу как можно ближе к дедлайну проверки. Заранее спасибо");
+alert("Уважаемые проверяющие! К сожалению еще не успела доделать эту часть задания. Еще ведется работа над сайтом. Если есть возможность, пожалуйста проверьте мою работу как можно ближе к дедлайну проверки. Заранее спасибо");
 
 // MENU
 const page = document.querySelector('.page');
@@ -337,7 +337,6 @@ function createSetCards(elem, setNumbers) {
   }
 
   // PAGINATION
-  const GENERATED_NUMBERS = generateMainArray();
   
   function generateMainArray() {
     const sourceArray = [0,1,2,3,4,5,6,7];
@@ -403,9 +402,144 @@ function createSetCards(elem, setNumbers) {
     return [...firstArr,...secondArr,...thirdArr];
   }
 
+//Сделала алгоритм генерации целого массива!! Ура!
 
-  console.log("main numbers ======="+ GENERATED_NUMBERS);
 
-  // console.log(""+shuffleRandomArray(sourceArray)+"|"+shuffleRandomArray(sourceArray)+"|"+shuffleRandomArray(sourceArray));
+const TOTAL_CARDS = 48;
+let TOTAL_ARRAY_NUMBERS;
 
-  // console.log("source =" + sourceArray);
+const paginationParams = {
+  "cardsNumber": 8,
+  "currentPage": 0,
+  "totalPages": 15,
+  "currentArray": []
+};
+
+
+
+initPagination();
+
+function initPagination() {
+  const paginationMain = document.querySelector("#paginationSlider");
+  
+  if (paginationMain !== null) {
+    TOTAL_ARRAY_NUMBERS = generateMainArray();
+    const paginationCardsContainer = document.querySelector("#paginationSlider .slider__content--extra");
+    const paginationStartButton = paginationMain.querySelector(".slider__pagination__start");
+    const paginationEndButton = paginationMain.querySelector(".slider__pagination__end");
+    const paginationPrevButton = paginationMain.querySelector(".slider__pagination__prev");
+    const paginationNextButton = paginationMain.querySelector(".slider__pagination__next");
+    const paginationPageNumberButton = paginationMain.querySelector(".slider__pagination__number");
+
+    setPaginationCardsNumber();
+    setPaginationTotalPages();
+    refreshPage(0);
+    setButtonsState();
+    
+
+    window.addEventListener("resize", () => {
+      setPaginationCardsNumber();
+      setPaginationTotalPages();
+      refreshPage(paginationParams.currentPage);
+      setButtonsState();
+    });
+
+    function refreshPage(pageNumber) {
+      setPaginationCurrentPage(pageNumber);
+      setPaginationCurrentArray();
+
+      createPaginationSetCards(paginationCardsContainer, paginationParams.currentArray);
+      paginationPageNumberButton.innerText = paginationParams.currentPage + 1;
+    }
+
+    function goEnd() {
+      refreshPage(paginationParams.totalPages);
+      setButtonsState()
+    }
+    paginationEndButton.addEventListener("click", goEnd);
+
+    function goStart() {
+      refreshPage(0);
+      setButtonsState();
+    }
+    paginationStartButton.addEventListener("click", goStart);
+    
+    function goPrev() {
+      refreshPage(paginationParams.currentPage - 1);
+      setButtonsState();
+    }
+    paginationPrevButton.addEventListener("click", goPrev);
+
+    function goNext() {
+      refreshPage(paginationParams.currentPage + 1);
+      setButtonsState();
+    }
+    paginationNextButton.addEventListener("click", goNext);
+
+    function setButtonsState() {
+      const currPage = paginationParams.currentPage;
+      if (currPage == 0) {        
+        paginationPrevButton.disabled = true;
+        paginationStartButton.disabled = true;
+        paginationNextButton.disabled = false;
+        paginationEndButton.disabled = false;
+      } else if (currPage == paginationParams.totalPages) {
+        paginationPrevButton.disabled = false;
+        paginationStartButton.disabled = false;
+        paginationNextButton.disabled = true;
+        paginationEndButton.disabled = true;
+      } else {
+        paginationPrevButton.disabled = false;
+        paginationStartButton.disabled = false;
+        paginationNextButton.disabled = false;
+        paginationEndButton.disabled = false;
+      }
+    }
+
+    function createPaginationSetCards(elem, setNumbers) {
+      elem.innerHTML = "";
+    
+      for (let i = 0; i < paginationParams.cardsNumber; i++) {
+        elem.appendChild(createCard(setNumbers[i]));
+      }
+    }
+  }
+
+
+}
+
+function setPaginationCardsNumber () {
+  //пока оставим такие размеры как в верстке
+  if (document.documentElement.clientWidth >= 1121) {
+    paginationParams.cardsNumber = 8;
+  }
+
+  if (document.documentElement.clientWidth < 1121 && document.documentElement.clientWidth >= 631) {
+    paginationParams.cardsNumber = 6;
+  }
+
+  if (document.documentElement.clientWidth < 631) {
+    paginationParams.cardsNumber = 3;
+  }
+}
+
+function setPaginationTotalPages() {
+  paginationParams.totalPages = TOTAL_CARDS/paginationParams.cardsNumber - 1;
+}
+
+function setPaginationCurrentPage(number) {
+  let currNum = number;
+  if (number < 0) currNum = 0;
+  if (number > paginationParams.totalPages) currNum = paginationParams.totalPages;
+  paginationParams.currentPage = currNum;
+}
+
+function setPaginationCurrentArray() {
+  const currentIndex = paginationParams.cardsNumber * paginationParams.currentPage;
+  const lastIndex = currentIndex + paginationParams.cardsNumber;
+
+  paginationParams.currentArray = [];
+  for (let i = currentIndex; i < lastIndex; i++) {
+    paginationParams.currentArray.push(TOTAL_ARRAY_NUMBERS[i]);
+  }
+}

@@ -1,5 +1,5 @@
 import PETS from "./pets.js";
-alert("Уважаемые проверяющие! К сожалению еще не успела доделать эту часть задания. Еще ведется работа над сайтом. Если есть возможность, пожалуйста проверьте мою работу как можно ближе к дедлайну проверки. Заранее спасибо");
+// alert("Уважаемые проверяющие! К сожалению еще не успела доделать эту часть задания. Еще ведется работа над сайтом. Если есть возможность, пожалуйста проверьте мою работу как можно ближе к дедлайну проверки. Заранее спасибо");
 
 // MENU
 const page = document.querySelector('.page');
@@ -28,6 +28,8 @@ let cardsNumber = 3;
 // let sliderWidthItems = sliderContainer.clientWidth;
 let gapSlides = 90;
 let translateX = 990 + gapSlides;
+
+// let lastActiveHtml;
 
 // POPUP
 const sliderModal = document.querySelector('.slider-modal');
@@ -187,6 +189,7 @@ if (sliderContainer !== null) {
   }
   sliderButtonNext.addEventListener('click', moveSliderNext);
 
+
   sliderContent.addEventListener('transitionend', (e) => {
     if (e.target === sliderContent) {
       const isPrev = sliderContent.classList.contains('slider__content--anim-left');
@@ -194,15 +197,21 @@ if (sliderContainer !== null) {
       if (isPrev) {
         sliderContent.classList.remove('slider__content--anim-left');
         setAnimCenter();
-        sliderActiveItems.innerHTML =  sliderPrevItems.innerHTML;
 
+        sliderNextItems.innerHTML = sliderActiveItems.innerHTML;
+        nextCards = activeCards;
+
+        sliderActiveItems.innerHTML =  sliderPrevItems.innerHTML;
         activeCards = prevCards;
         generatePrevCards();
         createSetCards(sliderPrevItems, prevCards);
-    
       } else {
         sliderContent.classList.remove('slider__content--anim-right');
         setAnimCenter();
+
+        sliderPrevItems.innerHTML = sliderActiveItems.innerHTML;
+        prevCards = activeCards;
+
         sliderActiveItems.innerHTML  =  sliderNextItems.innerHTML;
 
         activeCards = nextCards;
